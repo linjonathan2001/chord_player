@@ -68,7 +68,7 @@ class ChordPlayer:
     
     
     def play_chord(self):
-        if not self.chord:
+        if not hasattr(self, "chord"):
             print("Error: no chords played yet! Press p to play a chord.")
             return
         print(f"Sing the {self.note_in_question.value} note.")
@@ -123,7 +123,7 @@ class ChordPlayer:
 
 
     def print_and_play_answer(self):
-        if not self.chord:
+        if not hasattr(self, "chord"):
             print("Error: no chords played yet! Press p to play a chord.")
             return
         print(
@@ -162,7 +162,7 @@ def main():
     for key, val in vars(args).items():
         print(f"  {key}: {val}")
     while True:
-        user_input = input("Enter a command (h for help): ")
+        user_input = input("Please enter a command (h for help): ")
         if user_input == "p":
             chord_player.play_random_chord()
         elif user_input == "r":
