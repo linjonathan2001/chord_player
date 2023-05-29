@@ -158,6 +158,9 @@ def get_args():
 def main():
     args = get_args()
     chord_player = ChordPlayer(args)
+    print("Using args:")
+    for key, val in vars(args).items():
+        print(f"  {key}: {val}")
     while True:
         user_input = input("Enter a command (h for help): ")
         if user_input == "p":
