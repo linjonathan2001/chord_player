@@ -35,6 +35,7 @@ class Inversion(Enum):
     FIRST = "FIRST"
     SECOND = "SECOND"
 
+
 class NotePosition(Enum):
     BOTTOM = "BOTTOM"
     MIDDLE = "MIDDLE"
@@ -65,8 +66,7 @@ class ChordPlayer:
             yield AudioSegment.from_file(f"{NOTES_PATH}{str(note)}.aiff")[
                 STARTING_MILLIS : CHORD_LENGTH_MILLIS + STARTING_MILLIS
             ]
-    
-    
+
     def play_chord(self):
         if not hasattr(self, "chord"):
             print("Error: no chords played yet! Press p to play a chord.")
@@ -74,7 +74,6 @@ class ChordPlayer:
         print(f"Sing the {self.note_in_question.value} note.")
         with contextlib.redirect_stdout(io.StringIO()):
             play(self.chord)
-
 
     def play_random_chord(self):
         root_note_index = random.randint(0, 11)
@@ -121,7 +120,6 @@ class ChordPlayer:
         self.note_in_question = random.choice(list(NotePosition))
         self.play_chord()
 
-
     def print_and_play_answer(self):
         if not hasattr(self, "chord"):
             print("Error: no chords played yet! Press p to play a chord.")
@@ -129,7 +127,11 @@ class ChordPlayer:
         print(
             f"{self.root_note.value} {self.chord_quality.value} {self.inversion.value} inversion {self.note_in_question.value} note"
         )
-        index = [i for i, position in enumerate(NotePosition) if position == self.note_in_question][0]
+        index = [
+            i
+            for i, position in enumerate(NotePosition)
+            if position == self.note_in_question
+        ][0]
         with contextlib.redirect_stdout(io.StringIO()):
             play(self.notes_sounds[index][:SINGLE_LENGTH_MILLIS])
 
@@ -151,9 +153,14 @@ def print_usage():
 
 
 def get_args():
-    parser = argparse.ArgumentParser(description='Chord Player')
-    parser.add_argument('--root-only', action='store_true', help='Restrict inversions to only allow root inversion')
+    parser = argparse.ArgumentParser(description="Chord Player")
+    parser.add_argument(
+        "--root-only",
+        action="store_true",
+        help="Restrict inversions to only allow root inversion",
+    )
     return parser.parse_args()
+
 
 def main():
     args = get_args()
